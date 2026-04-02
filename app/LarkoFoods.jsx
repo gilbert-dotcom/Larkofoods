@@ -103,8 +103,6 @@ export default function App() {
   const [newProduct, setNewProduct] = useState(false);
   const [editDish, setEditDish] = useState(null);
   const [newDish, setNewDish] = useState(false);
-  const [editDish, setEditDish] = useState(null);
-  const [newDish, setNewDish] = useState(false);
   const [storedPass, setStoredPass] = useState(DEFAULT_ADMIN_PASS);
   const [newPass, setNewPass] = useState("");
 
@@ -593,7 +591,25 @@ export default function App() {
               {selItem.id >= 101 && <div style={{ background: C.gp, border: `1px solid ${C.gl}`, borderRadius: 10, padding: "10px 14px", marginBottom: 12, fontSize: 12, fontWeight: 600, color: C.ds }}>📅 Fresh every Friday in Liverpool • Special orders for other days on request via WhatsApp</div>}
               {selItem.details && <div style={{ marginBottom: 14 }}><h3 style={{ fontSize: 12, fontWeight: 700, color: C.gn, marginBottom: 6, textTransform: "uppercase", letterSpacing: 1 }}>About</h3><p style={{ fontSize: 13, color: "#555", lineHeight: 1.6 }}>{selItem.details}</p></div>}
               {selItem.ingredients && <div style={{ marginBottom: 14 }}><h3 style={{ fontSize: 12, fontWeight: 700, color: C.gn, marginBottom: 6, textTransform: "uppercase", letterSpacing: 1 }}>Ingredients</h3><div style={{ display: "flex", flexWrap: "wrap", gap: 3 }}>{selItem.ingredients.split(",").map((ing,i) => <span key={i} style={{ display: "inline-block", background: `rgba(46,139,60,.06)`, border: "1px solid rgba(46,139,60,.12)", borderRadius: 8, padding: "3px 9px", fontSize: 11, color: C.ds, fontWeight: 500 }}>{ing.trim()}</span>)}</div></div>}
-              {selItem.allergens && selItem.allergens !== "None" && <div style={{ background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: 10, padding: "10px 14px", fontSize: 12, fontWeight: 600, color: "#991B1B" }}>⚠️ {selItem.allergens}</div>}
+              {selItem.allergens && selItem.allergens !== "None" && <div style={{ background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: 10, padding: "10px 14px", fontSize: 12, fontWeight: 600, color: "#991B1B", marginBottom: 12 }}>⚠️ {selItem.allergens}</div>}
+              {selItem.videoUrl && (
+                <div style={{ marginBottom: 14 }}>
+                  <h3 style={{ fontSize: 12, fontWeight: 700, color: "#E87020", marginBottom: 8, textTransform: "uppercase", letterSpacing: 1 }}>🎬 Watch How It's Made</h3>
+                  {selItem.videoUrl.includes("youtube.com") || selItem.videoUrl.includes("youtu.be") ? (
+                    <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, borderRadius: 12, overflow: "hidden" }}>
+                      <iframe src={selItem.videoUrl.replace("watch?v=", "embed/").replace("youtu.be/", "youtube.com/embed/")} style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: "none", borderRadius: 12 }} allowFullScreen />
+                    </div>
+                  ) : (
+                    <a href={selItem.videoUrl} target="_blank" rel="noopener" style={{ display: "flex", alignItems: "center", gap: 10, background: "#fff", border: `1px solid ${C.cd}`, borderRadius: 12, padding: "14px 16px", textDecoration: "none", color: C.dk, fontWeight: 600, fontSize: 13, fontFamily: f }}>
+                      <span style={{ fontSize: 28 }}>▶️</span>
+                      <div>
+                        <div style={{ fontWeight: 700, marginBottom: 2 }}>Watch Video</div>
+                        <div style={{ fontSize: 11, color: C.tx }}>See how we make this dish — tap to watch on {selItem.videoUrl.includes("tiktok") ? "TikTok" : selItem.videoUrl.includes("instagram") ? "Instagram" : "our page"}</div>
+                      </div>
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
